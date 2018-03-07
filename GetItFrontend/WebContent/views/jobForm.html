@@ -1,0 +1,52 @@
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">
+		<span class="errorStyle">{{error.message}}</span>
+	</div>
+	<div class="clear top10"></div>
+	<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div>
+	<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+		<form id="jobForm" name="jobForm" novalidate>
+		  <div class="form-group">
+		    <label for="jobTitle" class="control-label">Job Title: </label>
+		    <input type="text" class="form-control" name="jobTitle" ng-model="job.jobTitle" required>
+		    <span ng-show="jobForm.jobTitle.$dirty && jobForm.jobTitle.$error.required" class="errorStyle">Job Title is required.</span>
+		  </div>
+		  <div class="form-group">
+		    <label for="jobDescription" class="control-label">Job Description: </label>
+		    <textarea rows="3" cols="5" class="form-control" name="jobDescription" ng-model="job.jobDescription" required></textarea>
+		    <span ng-show="jobForm.jobDescription.$dirty && jobForm.jobDescription.$error.required" class="errorStyle">Job Description is required.</span>
+		  </div>
+		  <div class="form-group">
+		    <label for="skillsRequired" class="control-label">Skills Required: </label>
+		    <input type="text" class="form-control" name="skillsRequired" ng-model="job.skillsRequired" required>
+		    <span ng-show="jobForm.skillsRequired.$dirty && jobForm.skillsRequired.$error.required" class="errorStyle">Skills are required.</span>
+		  </div>
+		  <div class="form-group">
+		    <label for="location" class="control-label">Location: </label>
+		    <input type="text" class="form-control" ng-model="job.location" required>
+		    <span ng-show="jobForm.jobTitle.$dirty && jobForm.jobTitle.$error.required" class="errorStyle">Job Title is required.</span>
+		  </div>
+		  <div class="form-group">
+		    <label for="companyName" class="control-label">Company Name: </label>
+		    <input type="text" class="form-control" name="companyName" ng-model="job.companyName" required>
+		    <span ng-show="jobForm.companyName.$dirty && jobForm.companyName.$error.required" class="errorStyle">Company Name is required.</span>
+		  </div>
+		  <div class="form-group">
+		    <label for="salary" class="control-label">Salary: </label>
+		    <input type="text" class="form-control" name="salary" ng-model="job.salary" required>
+		    <span ng-show="jobForm.salary.$dirty && jobForm.salary.$error.required" class="errorStyle">Salary is required.</span>
+		  </div>
+		  <div class="form-group">
+		    <label for="yearsOfExp" class="control-label">Years Of Experience: </label>
+		    <input type="text" class="form-control" name="yearsOfExp" ng-model="job.yearsOfExp" required>
+		    <span ng-show="jobForm.yearsOfExp.$dirty && jobForm.yearsOfExp.$error.required" class="errorStyle">Years of Experience is required.</span>
+		  </div>
+		  <div class="form-group" align="center">
+		    <button ng-click="addJob()" type="submit" ng-disabled="jobForm.$invalid" class="btn btn-default">Add Job</button>
+		  </div>
+		</form>
+	</div>
+	<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div>
+
+</div>

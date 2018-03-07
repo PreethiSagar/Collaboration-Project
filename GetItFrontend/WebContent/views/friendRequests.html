@@ -1,0 +1,46 @@
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+<div class="clear top10"></div>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">
+	<span class="errorStyle">{{error.message}}</span>
+</div>
+<div class="clear top10"></div>
+<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12"></div>
+<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" ng-show="friendRequests.length > 0">
+	<span>Respond to Your {{friendRequests.length}} Friend Requests</span>
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xm-12 top20">
+		<div class="col-lg-4 col-md-4 col-sm-4 col-xm-12" align="center" ng-repeat="request in friendRequests">
+			<img src="http://localhost:8081/GetItMiddleware/getimage/{{request.fromId}}" class="friendImageStyle" />
+			<div class="clear top10"></div>
+			<span>{{request.fromId}}</span>
+			<div class="clear top10"></div>
+			<a href="" ng-click="updateFriendRequest(request,'A')" class="btn btn-primary">Accept</a>
+			<a href="" ng-click="updateFriendRequest(request,'R')" class="btn btn-danger">Reject</a>
+		</div>
+	</div>
+</div>
+<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" ng-show="friendRequests.length == 0" align="center">
+	<span>No New Friend Requests</span>
+</div>
+<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12"></div>
+
+<div class="clear top40"></div>
+<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12"></div>
+<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 top40 bottom40" ng-show="suggestedUsers.length > 0">
+	<span>People you may know</span>
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xm-12 top20">
+		<div class="col-lg-4 col-md-4 col-sm-4 col-xm-12" align="center" ng-repeat="user in suggestedUsers">
+			<img src="http://localhost:8081/GetItMiddleware/getimage/{{user.userName}}" class="friendImageStyle" />
+			<div class="clear top10"></div>
+			<span>{{user.firstName}} {{user.lastName}}</span>
+			<div class="clear top10"></div>
+			<a href="" ng-click="addFriendRequest(user.userName)" class="btn btn-primary">Send Friend Request</a>
+		</div>
+	</div>
+</div>
+<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" ng-show="suggestedUsers.length == 0" align="center">
+	<span>No Suggested Users</span>
+</div>
+<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12"></div>
+
+</div>

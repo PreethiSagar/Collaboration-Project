@@ -1,0 +1,76 @@
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div>
+<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+
+	<div ng-show="currentUser.role == 'ADMIN'">
+		<h3>List of Blogs Waiting Approval</h3>
+		<table class="table table-hover">
+			<tr class="tableHead">
+				<th class="alignCenter">Blog Title</th>
+				<th class="alignCenter">Blog Author</th>
+				<th class="alignCenter">Posted On</th>
+				<th></th>
+			</tr>
+			<tr ng-if="blogsWaitingApproval == 0">
+				<td colspan="5" class="alignCenter">No blogs waiting for approval.</td>
+			</tr>
+			<tr class="tableContent" ng-repeat="blogApproval in blogsWaitingApproval">
+				<td>{{blogApproval.blogTitle}}</td>
+				<td class="alignCenter">{{blogApproval.postedBy.firstName}}</td>
+				<td class="alignCenter">
+					{{blogApproval.postedOn | date:'MMM dd, yyyy @ hh:mm a'}}
+				</td>
+				<td>
+					<span class="cursorp">
+						<a href="#/getblogapprovaldetail/{{blogApproval.id}}"><img src="resources/images/viewIcon.png" class="iconStyle" /></a>
+					</span>
+					&nbsp;&nbsp;
+					<span class="cursorp" ng-show="currentUser.userName == blogApproval.postedBy.userName" ng-click="editBlog(blogApproval.id)">
+						<img src="resources/images/editIcon.png" class="iconStyle" />
+					</span>
+				</td>
+			</tr>
+		</table>
+	</div>	
+	
+	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
+	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+		<div class="form-group" align="right">
+			<input type="text" class="form-control" placeholder="Search Here" ng-model="blogSearchText">
+		</div>
+	</div>
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 jobListContent bottom10" ng-if="blogsApproved.length > 0" ng-repeat="blog in blogsApproved | filter:blogSearchText">
+		<div class="clear top20"></div>
+		<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12 calenderDiv" align="center">
+			{{blog.postedOn | date:'MMM dd'}}
+			<hr class="horizontalBar">
+			{{blog.postedOn | date:'hh:mm'}}
+		</div>
+		<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 bottom10">
+			<span class="jobTitle">{{blog.blogTitle}}</span>
+			<span class="shiftRight" ng-show="currentUser.userName == blog.postedBy.userName">
+				<img src="resources/images/editIcon.png" class="iconStyle" ng-click="editBlog(blog.id)" />
+			</span>
+			<div class="clear"></div>
+			<span class="jobContentTitle">{{blog.postedBy.firstName}} | {{blog.likes}} Likes | {{blog.blogComments.length}} Comments</span>	
+			<div class="clear"></div>					
+		</div>
+		<div class="clear top10"></div>
+		<hr class="horizontalBar">
+		<div class="clear top10"></div>
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bottom20" align="left">
+			<span class="jobContent">{{blog.blogContent | limitTo: 200 }}{{blog.blogContent.length > 200 ? '...' : ''}}</span>
+			<a href="#/getblogdetail/{{blog.id}}"><u>View Details</u></a>
+		</div>
+	</div>
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 jobListContent" ng-if="blogsApproved.length == 0">
+		<div class="clear top30"></div>
+		<span class="jobContent">No Blogs Available.</span>
+		<div class="clear top30"></div>
+	</div>
+	
+</div>
+<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div>
+<div class="clear top10"></div>
+
+</div>

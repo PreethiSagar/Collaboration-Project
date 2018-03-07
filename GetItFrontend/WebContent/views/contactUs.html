@@ -1,0 +1,53 @@
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	<div class="clear top10"></div>
+	<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12"></div>
+	<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+		<span class="jobTitle"><u>Contact Us</u></span>			
+		<div class="clear top10"></div>
+		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+			<div class="clear top30"></div>
+			<b>We are always there to help you!</b>
+			<div class="clear top20"></div>
+			<span class="glyphicon glyphicon-phone glyphiconStyle"></span>&nbsp;+91 8745369528 
+			<div class="clear"></div>
+			<span class="left25">Monday-Friday | 9am - 6pm</span>
+			<div class="clear top10"></div>
+			<span class="glyphicon glyphicon-envelope glyphiconStyle"></span>&nbsp;contactus@getit.com
+		</div>
+		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+			<div class="clear top30"></div>
+			<b>Give feedback or report an issue</b>
+			<div class="clear top20"></div>
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">
+				<span class="successStyle">{{feedbackSuccess}}</span>
+			</div>
+			<form id="feedbackForm" name="feedbackForm" novalidate>
+			  <div class="form-group">
+			    <label for="name" class="control-label">Your Name: </label>
+			    <input type="text" class="form-control" name="name" ng-model="feedback.name">
+			    <span ng-show="feedbackForm.name.$dirty && feedbackForm.name.$error.required" class="errorStyle">Name is required.</span>
+			  </div>
+			  <div class="form-group">
+			    <label for="email" class="control-label">Your Email: </label>
+			    <input type="email" class="form-control" ng-model="feedback.email">
+			    <span ng-show="feedbackForm.email.$dirty && feedbackForm.email.$error.required" class="errorStyle">Email is required.</span>
+	    		<span ng-show="feedbackForm.email.$dirty && feedbackForm.email.$error.email" class="errorStyle">Email is not in valid format.</span>
+			  </div>
+			  <div class="form-group">
+			    <label for="phoneNumber" class="control-label">Your Phone Number: </label>
+			    <input type="text" class="form-control" ng-model="feedback.phoneNumber">
+			  </div>
+			  <div class="form-group">
+			    <label for="message" class="control-label">Your Message: </label>
+	    		<textarea rows="5" cols="5" class="form-control" ng-model="feedback.message"></textarea>
+	    		<span ng-show="feedbackForm.message.$dirty && feedbackForm.message.$error.required" class="errorStyle">Message is required.</span>
+			  </div>
+			  <div class="form-group" align="center">
+			    <button ng-click="submitFeedback()" type="submit" ng-disabled="feedbackForm.$invalid" class="btn btn-default">Submit</button>
+			  </div>
+			</form>
+		</div>	
+	</div>
+	<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12"></div>
+	<div class="clear top10"></div>
+</div> 

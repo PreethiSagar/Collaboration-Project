@@ -1,0 +1,65 @@
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	<div class="clear top10"></div>
+	<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div>
+	<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">	
+	
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 jobListContent bottom30">
+			<div class="clear top20"></div>
+			<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12 calenderDiv" align="center">
+				{{blogDetails.postedOn | date:'MMM dd'}}
+				<hr class="horizontalBar">
+				{{blogDetails.postedOn | date:'hh:mm'}}
+			</div>
+			<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 bottom10">
+				<span class="jobTitle">{{blogDetails.blogTitle}}</span>
+				<div class="clear"></div>
+				<span class="jobContentTitle">{{blogDetails.postedBy.firstName}} | 
+				{{blogDetails.likes}} Likes | 
+				<a href="" ng-click="showComments()">{{blogDetails.blogComments.length}} Comments</a></span>	
+				<div class="clear"></div>					
+			</div>
+			<div class="clear top10"></div>
+			<hr class="horizontalBar">
+			<div class="clear top10"></div>
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="left">
+				<span class="jobContent">{{blogDetails.blogContent}}</span>
+				<div class="clear top10"></div>
+				<span>
+					<span ng-show="liked" class="glyphicon glyphicon-thumbs-up likedStyle cursorp" ng-click="updateBlogLikes()" title="Click to unlike">Unlike</span>
+					<span ng-show="!liked" class="glyphicon glyphicon-thumbs-up unlikedStyle cursorp" ng-click="updateBlogLikes()" title="Click to like">Like</span>
+				</span>
+				<div class="clear top10"></div>
+			</div>
+			<div class="clear"></div>
+			<hr class="horizontalBar">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-show="showComment">
+				<span class="jobContentTitle">Blog Comments</span>
+				<div class="clear top10"></div>
+				<ul class="commentListStyle">
+					<li class="bottom10" ng-repeat="comment in blogDetails.blogComments | orderBy:'-commentedOn'">
+						<img src="http://localhost:8081/GetItMiddleware/getimage/{{comment.user.userName}}" class="commentImageStyle" />
+						<strong>{{comment.user.firstName}} {{comment.user.lastName}}</strong>
+						<div class="clear"></div>
+						<span class="left40">{{comment.commentText}}</span>
+						<div class="clear"></div>						
+						<span class="left40">{{comment.commentedOn | date:'MMM dd, yyyy @ hh:mm a'}}</span>
+					</li>
+				</ul>
+			</div>
+			<div class="clear top20"></div>
+			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+				<div class="form-group">
+				    <textarea rows="3" cols="5" class="form-control" ng-model="blogComments.commentText"></textarea>
+				</div>
+			</div>
+			<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+				<div class="form-group" align="center">
+				    <button ng-click="addBlogComment()" type="submit" class="btn btn-default top40">Post Comment</button>
+				</div>
+			</div>
+		</div>		
+		<div class="clear top20"></div>
+	</div>
+	<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div>
+	<div class="clear top10"></div>
+</div>

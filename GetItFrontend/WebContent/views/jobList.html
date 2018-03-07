@@ -1,0 +1,58 @@
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+	<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div>
+	<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
+		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+			<div class="form-group" align="right">
+			    <input type="text" class="form-control" placeholder="Search Here" ng-model="jobSearchText">
+			</div>
+		</div>
+		
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 jobListContent bottom10" ng-if="jobs.length > 0" ng-repeat="job in jobs | filter:jobSearchText">
+			<div class="clear top10"></div>
+			<span>
+				<span class="glyphicon glyphicon-briefcase glyphiconStyle"></span>
+				&nbsp;&nbsp;&nbsp;
+				<span class="jobTitle">{{job.jobTitle}}</span>
+				<span class="shiftRight">
+					<img src="resources/images/editIcon.png" ng-show="currentUser.role=='ADMIN'" ng-click="editJob(job.id)" class="iconStyle cursorp" />
+					<img src="resources/images/deleteIcon.png" ng-show="currentUser.role=='ADMIN'" ng-click="deleteJob(job.id)" class="iconStyle cursorp" />
+				</span>
+			</span>
+			<div class="clear"></div>
+			<span class="jobContentTitle">{{job.companyName}}</span>
+			<div class="clear top10"></div>
+			<span class="jobContent">
+				<span class="glyphicon glyphicon-bookmark glyphiconStyle shiftLeft"></span>
+				<span class="shiftLeft">&nbsp;&nbsp;&nbsp;{{job.yearsOfExp}}</span>
+				<span class="shiftRight">&nbsp;&nbsp;&nbsp;{{job.location}}</span>
+				<span class="glyphicon glyphicon-map-marker glyphiconStyle shiftRight"></span>
+			</span>
+			<div class="clear top40"></div>
+			<span class="jobContentTitle">Key Skills: </span><span class="jobContent">{{job.skillsRequired}}</span>
+			<div class="clear top10"></div>
+			<span class="jobContentTitle">Job Description: </span>
+			<span class="jobContent">{{job.jobDescription | limitTo: 30 }}{{job.jobDescription.length > 30 ? '...' : ''}}</span>
+			<span class="cursorp">
+				<a href="#/getjob/{{job.id}}"><u>View Details</u></a>
+			</span>
+			<div class="clear top10"></div>
+			<span class="jobContent">
+				<span class="glyphicon glyphicon-star glyphiconStyle shiftLeft"></span>
+				<span class="shiftLeft">&nbsp;&nbsp;&nbsp;&#8377;&nbsp;{{job.salary}}</span>
+				<span class="shiftRight">Posted On: {{job.postedOn | date:'MMM dd, yyyy'}}</span>
+			</span>
+			<div class="clear top40"></div>
+		</div>
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 jobListContent" ng-if="jobs.length == 0">
+			<div class="clear top30"></div>
+			<span class="jobContent">No Current Jobs Available.</span>
+			<div class="clear top30"></div>
+		</div>
+		
+	</div>
+	<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div>
+	<div class="clear top10"></div>
+	
+</div>

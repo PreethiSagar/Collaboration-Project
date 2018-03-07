@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1">
+	<meta http-equiv="Content-Type" content="text/html; application/json; charset=ISO-8859-1">
+	<link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon" />	
+	<title>Get It</title>
+	<link rel="stylesheet" href="resources/css/styles.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet">
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>	
+	<script src="resources/js/sockjs/sockjs.js"></script>
+    <script src="resources/js/stomp/dist/stomp.js"></script>
+	<script type="text/javascript" src="controllers/homecontroller.js"></script>
+	<script type="text/javascript" src="services/homeservice.js"></script>
+	<script type="text/javascript" src="controllers/usercontroller.js"></script>
+	<script type="text/javascript" src="services/userservice.js"></script>
+	<script type="text/javascript" src="controllers/jobcontroller.js"></script>
+	<script type="text/javascript" src="services/jobservice.js"></script>
+	<script type="text/javascript" src="controllers/blogcontroller.js"></script>
+	<script type="text/javascript" src="services/blogservice.js"></script>
+	<script type="text/javascript" src="controllers/friendcontroller.js"></script>
+	<script type="text/javascript" src="services/friendservice.js"></script>
+	<script type="text/javascript" src="controllers/chatcontroller.js"></script>
+	<script type="text/javascript" src="services/chatservice.js"></script>
+</head>
+<body ng-app="app">
+<header>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <img alt="Logo" src="resources/images/getIt.png" class="shiftLeft logoImg" />
+    <ul class="nav navbar-nav">
+      <li><a href="#/home">Home</a></li>
+      <li class="dropdown cursorp" ng-show="currentUser.userName">
+        <a class="dropdown-toggle" data-toggle="dropdown">Jobs
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#/addjob" ng-show="currentUser.role=='ADMIN'">Add Job</a></li>
+          <li><a href="#/alljobs">Get All Jobs</a></li>
+        </ul>
+      </li>
+      <li class="dropdown cursorp" ng-show="currentUser.userName">
+        <a class="dropdown-toggle" data-toggle="dropdown">Blogs
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#/addblog">Add Blog</a></li>
+          <li><a href="#/getBlogs">Get All Blogs</a></li>
+        </ul>
+      </li>
+      <li class="dropdown cursorp" ng-show="currentUser.userName">
+        <a class="dropdown-toggle" data-toggle="dropdown">Friends
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#/friendRequests">Friend Requests</a></li>
+          <li><a href="#/friendsList">My Friends</a></li>
+        </ul>
+      </li>
+      <li class="dropdown cursorp" ng-show="currentUser.userName">
+      	<a href="#/chat">Chat</a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      	<li ng-show="currentUser.userName">
+      		<img src="http://localhost:8081/GetItMiddleware/getimage/{{currentUser.userName}}" class="profilePictureStyle" />
+      	</li>
+	    <li class="dropdown cursorp" ng-show="currentUser.userName"> 
+	        <a class="dropdown-toggle" data-toggle="dropdown">{{currentUser.userName | uppercase}}
+	        <span class="caret"></span></a>
+	        <ul class="dropdown-menu">
+	          <li><a href="#/editprofile">Update Profile</a></li>
+	          <li><a href="#/uploadPic">Change Picture</a></li>
+	          <li ng-show="currentUser.role == 'ADMIN'"><a href="#/customerfeedbacks">Customer Feedbacks</a></li>
+	          <li><a ng-click="logout()">Logout</a></li>
+	        </ul>
+	    </li>
+    	<li class="dropdown cursorp" ng-show="currentUser.userName"> 
+	        <a class="dropdown-toggle" data-toggle="dropdown">
+	        	<span class="glyphicon glyphicon-bell glyphiconStyle" ng-click="updateLength()"></span>
+	        	<span class="notificationStyle" ng-show="notificationLength > 0">{{notificationLength}}</span>
+	        </a>
+	        <ul class="dropdown-menu">
+	        	<li class="NotViewedNotificationStyle" ng-repeat="notViewed in notViewedNotification">
+	        		<a class="NotViewedNotificationStyle" href="" ng-click="updateNotificationViewed(notViewed.id)">
+	        			"<b>{{notViewed.blogTitle}}</b>" is <b>{{notViewed.approvalStatus}}</b>
+	        			<span ng-show="notViewed.approvalStatus == 'Rejected'"> due to reason '{{notViewed.rejectionReason}}'</span>
+	        		</a>
+	        	</li>
+	        	<li class="ViewedNotificationStyle" ng-repeat="viewed in viewedNotification">
+	        		<a href="" class="ViewedNotificationStyle">
+	        			"<b>{{viewed.blogTitle}}</b>" is <b>{{viewed.approvalStatus}}</b>
+	        			<span ng-show="viewed.approvalStatus == 'Rejected'"> due to reason '{{viewed.rejectionReason}}'</span>
+	        		</a>
+	        	</li>
+	        </ul>
+      	</li>
+	    <li ng-hide="currentUser.userName"><a href="#/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+	    <li ng-hide="currentUser.userName"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+  </div>
+</nav>
+</header>
+
+<div ng-view id="basicViewStyle">
+</div>
+
+<footer>
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 footerBackground">
+		<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 top10 bottom10" align="left">
+			<a href="#/aboutus" class="footerContent">About Us</a>
+			<span class="footerContent">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+			<a href="#/help" class="footerContent">Help</a>
+			<div class="clear top5"></div>
+			<a href="#/privacypolicy" class="footerContent">Privacy Policy</a>
+			<span class="footerContent">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+			<a href="#/contactus" class="footerContent">Contact Us</a>
+		</div>
+		<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 top20" align="center" valign="center">
+				<span class="footerContent">All rights reserved @ GetIt.</span>
+		</div>
+		<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 top15 bottom10" align="right" valign="center">
+			<a href="https://www.facebook.com" style="color: rgba(202, 56, 142, 0.59) !important;"><i id="social-fb1" class="fa fa-facebook-square fa-3x social"></i></a>
+			<a href="https://twitter.com" style="color: rgba(202, 56, 142, 0.59) !important;"><i id="social-tw" class="fa fa-twitter-square fa-3x social"></i></a>
+			<a href="https://plus.google.com" style="color: rgba(202, 56, 142, 0.59) !important;"><i id="social-gp" class="fa fa-google-plus-square fa-3x social"></i></a>
+			<a href="mailto:777preethu@gmail.com" style="color: rgba(202, 56, 142, 0.59) !important;"><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a>
+		</div>	
+	</div>
+</footer>
+
+</body>
+</html>
